@@ -1,2 +1,24 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<%= flash[:notice] %>
+<div>
+  <h4>Import data here:</h4>
+  <%= form_tag users_import_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import from file.." %>
+  <% end %>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Password</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.password %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
