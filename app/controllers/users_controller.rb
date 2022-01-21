@@ -20,7 +20,19 @@ class UsersController < ApplicationController
       if user.valid?
         flash[:notice] = ["#{user.name} was successfully saved"]
       else
-        flash[:notice] << "Change #{} character of #{user.name}'s password"
+        if user.password.length < 10
+          difference = 10 - user.password.length
+          flash[:notice] << "Change #{difference} character of #{user.name}'s password"
+        elsif user.password.length > 16
+          difference = user.password.length - 16
+          flash[:notice] << "Change #{difference} character of #{row['name']}'s password"
+        elsif !(user.password.match(/(.*[a-z].*)/)) || !(user.password.match(/(.*[A-Z].*)/)) || !(user.password.match(/(.*\d.*)/))
+          flash[:notice] << "Change 1 character of #{user.name}'s password"
+        elsif user.password.scan(/((.)\2{2,})/).map(&:first).present?
+          flash[:notice] << "Change #{user.password.scan(/((.)\2{2,})/).map(&:first).count} character of #{user.name}'s password"
+        else
+          flash[:notice] << "#{user.name} was successfully saved"
+        end
       end
     end
   end
