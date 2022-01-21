@@ -1,5 +1,9 @@
 <% if flash[:notice] %>
-  <%= safe_join(flash[:notice], "<p>".html_safe) %>
+  <ol>
+    <% flash[:notice].each do |element| %>
+      <li><%= element %></li>
+    <% end %>
+  </ol>
 <% end %>
 <div>
   <h4>Import data here:</h4>
