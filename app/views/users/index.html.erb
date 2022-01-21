@@ -1,0 +1,27 @@
+<% if flash[:notice] %>
+  <%= safe_join(flash[:notice], "<p>".html_safe) %>
+<% end %>
+<div>
+  <h4>Import data here:</h4>
+  <%# I use form tag because I don't have a model yet and multipart: true because it is going to accept file uploads %>
+  <%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file, accept: 'text/csv' %>
+    <%= submit_tag "Import from file.." %>
+  <% end %>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Password</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.password %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

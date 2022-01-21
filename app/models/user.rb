@@ -1,5 +1,7 @@
 class User < ApplicationRecord
+  PASSWORD_REQUIREMENTS = /\A(?!.*(.)\1\1)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{10,16}\z/
+  validates :name, presence: true
   validates :name, :password, presence: true
-  validates :password, length: { in: 10..16 }
-  validates :password, format: { with: /\A(?!.*(.)\1\1)(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{10,16}\z/ }
+  validates :password, format: PASSWORD_REQUIREMENTS
+
 end
